@@ -20,6 +20,8 @@ async def check():
             item = rss.most_recent()
             message = format_message.format_notes(item)
             await client.send_message(client.get_channel("350634825516056577"), message)
+        else:
+            await client.send_message(client.get_channel("350634825516056577"), "Sorry, no updates yet.")
         await asyncio.sleep(28800)  # Check every 8 hours
 
 
