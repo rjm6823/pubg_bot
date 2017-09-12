@@ -18,10 +18,9 @@ async def check():
     while True:
         if rss.check_new():
             item = rss.most_recent()
-            message = format_message.format_notes(item)
-            await client.send_message(client.get_channel("350634825516056577"), message)
-        else:
-            await client.send_message(client.get_channel("350634825516056577"), "Sorry, no updates yet.")
+            queue = format_message.format_notes(item)
+            for message in queue:
+                await client.send_message(client.get_channel("350634825516056577"), message)
         await asyncio.sleep(28800)  # Check every 8 hours
 
 
@@ -41,8 +40,9 @@ async def on_message(message):
         await client.purge_from(channel, check=is_not_pinned)
     elif message.content.startswith('!recent'):
         item = rss.most_recent()
-        message = format_message.format_notes(item)
-        await client.send_message(channel, message)
+        queue = format_message.format_notes(item)
+        for message in queue:
+            await client.send_message(channel, message)
 
 
 client.run('MzUwNjM0MDYzMzIyODA4MzIw.DIIAPw.vKYUeqpckkZp7O2KB-mvCshsqv8')

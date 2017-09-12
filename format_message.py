@@ -18,4 +18,12 @@ def format_notes(item):
     date = item['published'] + '\n'
     desc = remove_html_tags(replace_html_tags(item['description'])) + '\n'
     link = '<' + item['link'] + '>'
-    return title + date + desc + link
+    final = title + date + desc + link
+    queue = []
+
+    # Have to break messages into 2000 char chunks
+    while final:
+        tmp = final[:2000]
+        queue.append(tmp)
+        final = final[2000:]
+    return queue
